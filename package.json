@@ -7,7 +7,7 @@
     "admin": "npm run dev --prefix admin",
     "backend": "npm run dev --prefix backend",
     "mobile": "npm run dev --prefix mobile",
-    "dev": "concurrently \"npm run admin\" \"npm run backend\"",
+    "dev": "concurrently \"npm run admin\" \"npm run backend\" \"npm run mobile\"",
     "build:admin": "npm run build --prefix admin",
     "build:backend": "npm run build --prefix backend",
     "build:all": "npm run build:admin && npm run build:backend",
