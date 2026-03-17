@@ -36,6 +36,12 @@ export const ENV = {
     PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
+
+  // Clerk Configuration
+  CLERK: {
+    CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  },
 };
 
 export default ENV;
