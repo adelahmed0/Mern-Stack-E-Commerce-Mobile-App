@@ -114,6 +114,10 @@ app.use(
 // Serve static files from the uploads directory
 app.use(express.static(path.join(__dirname, "uploads")));
 
+// Serve admin frontend static files (Production only recommended)
+const adminDistPath = path.join(__dirname, "../..", "admin", "dist");
+app.use(express.static(adminDistPath));
+
 // 6) RATE LIMITING
 // Global Rate Limiting: Prevent brute-force and DDoS
 const limiter = rateLimit({
@@ -128,10 +132,18 @@ app.use(`${api}`, limiter);
 // 7) MOUNT ROUTES
 app.use(`${api}`, routes);
 
-// 8) 404 HANDLER
-// Fallback for any route not matched by the routers above
-app.all(/(.*)/, (req: Request, res: Response, next: NextFunction) => {
-  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
+// 8) 404 HANDLER / FRONTEND FALLBACK
+// Serve index.html for any frontend routes that aren't API calls
+app.get("*", (req: Request, res: Response, next: NextFunction) => {
+  if (req.originalUrl.startsWith(api)) {
+    return next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
+  }
+  res.sendFile(path.join(adminDistPath, "index.html"));
+});
+
+// Fallback for any route not matched by the routers above (API only)
+app.all(`${api}/*`, (req: Request, res: Response, next: NextFunction) => {
+  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
 });
 
 // 9) GLOBAL ERROR HANDLING

@@ -1,0 +1,19 @@
+{
+  "name": "mern-stack-ecommerce",
+  "version": "1.0.0",
+  "description": "Mern Stack E-Commerce Mobile App Root",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix admin && npm install --prefix mobile",
+    "admin": "npm run dev --prefix admin",
+    "backend": "npm run dev --prefix backend",
+    "mobile": "npm run dev --prefix mobile",
+    "dev": "concurrently \"npm run admin\" \"npm run backend\"",
+    "build:admin": "npm run build --prefix admin",
+    "build:backend": "npm run build --prefix backend",
+    "build:all": "npm run build:admin && npm run build:backend",
+    "start:backend": "npm run start --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
