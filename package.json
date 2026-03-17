@@ -11,9 +11,12 @@
     "build:admin": "npm run build --prefix admin",
     "build:backend": "npm run build --prefix backend",
     "build:all": "npm run build:admin && npm run build:backend",
-    "build": "npm run build:all",
+    "build": "npm run install:all && npm run build:all",
     "start:backend": "npm run start --prefix backend",
     "start": "npm run start:backend"
+  },
+  "dependencies": {
+    "typescript": "^5.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
