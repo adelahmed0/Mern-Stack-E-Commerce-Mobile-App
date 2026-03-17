@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from "nodemailer";
+import ENV from "../config/env.js";
 
 /**
  * Interface for email delivery options
@@ -17,12 +18,12 @@ interface EmailOptions {
 const sendEmail = async (options: EmailOptions): Promise<void> => {
   // 1) Configure the SMTP transporter
   const transporter: Transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: process.env.EMAIL_SECURE === "true",
+    host: ENV.EMAIL.HOST,
+    port: ENV.EMAIL.PORT,
+    secure: ENV.EMAIL.SECURE,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: ENV.EMAIL.USER,
+      pass: ENV.EMAIL.PASS,
     },
   });
 

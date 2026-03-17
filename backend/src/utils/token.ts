@@ -1,4 +1,5 @@
 import jwt, { SignOptions } from "jsonwebtoken";
+import ENV from "../config/env.js";
 
 /**
  * Utility to generate a signed JSON Web Token (JWT)
@@ -8,9 +9,9 @@ import jwt, { SignOptions } from "jsonwebtoken";
  */
 export const createToken = (
   payload: any,
-  secret: string = process.env.JWT_SECRET!,
+  secret: string = ENV.JWT.SECRET,
   options: SignOptions = {
-    expiresIn: process.env.JWT_EXPIRES_IN as SignOptions["expiresIn"],
+    expiresIn: ENV.JWT.EXPIRES_IN as SignOptions["expiresIn"],
   },
 ) => jwt.sign(payload, secret, options);
 
@@ -22,5 +23,5 @@ export const createToken = (
  */
 export const verifyToken = (
   token: string,
-  secret: string = process.env.JWT_SECRET!,
+  secret: string = ENV.JWT.SECRET,
 ) => jwt.verify(token, secret);

@@ -5,6 +5,7 @@
  * JSON serialization, and automatic population.
  */
 import { Schema, Document, Query } from "mongoose";
+import ENV from "../config/env.js";
 
 /**
  * Image URL Plugin
@@ -25,8 +26,7 @@ export const imageURLPlugin = (
    */
   const setImageURL = (doc: any) => {
     if (!doc) return;
-    const baseUrl =
-      process.env.BASE_URL || `http://localhost:${process.env.PORT || 8000}`;
+    const baseUrl = ENV.BASE_URL;
 
     fields.forEach((field) => {
       // Only prefix if it's a relative path (doesn't start with http/https)

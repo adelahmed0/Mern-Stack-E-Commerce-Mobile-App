@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError } from "../utils/apiError.js";
+import ENV from "../config/env.js";
 
 /**
  * Global Error Handling Middleware
@@ -20,7 +21,7 @@ const globalError = (
   if (err.name === "TokenExpiredError") err = handleJwtExpired();
 
   // Differentiate error responses based on environment
-  if (process.env.NODE_ENV === "development") {
+  if (ENV.NODE_ENV === "development") {
     sendErrorForDev(err, res);
   } else {
     sendErrorForProd(err, res);

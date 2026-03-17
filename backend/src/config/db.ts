@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import chalk from "chalk";
+import ENV from "./env.js";
 
 /**
  * Connect to MongoDB database
@@ -8,7 +9,7 @@ import chalk from "chalk";
  */
 const connectDB = (): void => {
   // Retrieve the connection string from environment variables
-  const MONGO_URI = process.env.MONGO_URI as string;
+  const MONGO_URI = ENV.MONGO_URI;
 
   // Validate that the URI exists
   if (!MONGO_URI) {

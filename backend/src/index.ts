@@ -1,11 +1,11 @@
 // Load environment variables from .env file
-import "dotenv/config";
+import ENV from "./config/env.js";
 import app from "./app.js";
 import connectDB from "./config/db.js";
 import chalk from "chalk";
 
-// Set port from environment variables or default to 8000
-const PORT = Number(process.env.PORT) || 8000;
+// Set port from environment variables
+const PORT = ENV.PORT;
 
 // Establish database connection
 connectDB();

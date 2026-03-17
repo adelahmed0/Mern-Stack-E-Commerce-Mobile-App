@@ -13,13 +13,14 @@ import mongoSanitize from "express-mongo-sanitize";
 import { xss } from "express-xss-sanitizer";
 
 // Application routes and global utilities
+import ENV from "./config/env.js";
 import routes from "./routes/index.js";
 import { ApiError } from "./utils/apiError.js";
 import globalError from "./middleware/globalError.middleware.js";
 
 // 2) SETUP & INITIALIZATION
 const app: Application = express();
-const api = process.env.API_PREFIX || "/api";
+const api = ENV.API_PREFIX;
 
 // Helper to handle ESM directory paths
 const __filename = fileURLToPath(import.meta.url);
@@ -43,7 +44,7 @@ app.use(helmet());
 app.use(compression());
 
 // Logging (Development only)
-if (process.env.NODE_ENV === "development") {
+if (ENV.NODE_ENV === "development") {
   app.use(
     morgan((tokens, req, res) => {
       const status = Number(tokens.status(req, res));
