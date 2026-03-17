@@ -134,7 +134,7 @@ app.use(`${api}`, routes);
 
 // 8) 404 HANDLER / FRONTEND FALLBACK
 // Serve index.html for any frontend routes that aren't API calls
-app.get("*", (req: Request, res: Response, next: NextFunction) => {
+app.get("(.*)", (req: Request, res: Response, next: NextFunction) => {
   if (req.originalUrl.startsWith(api)) {
     return next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
   }
