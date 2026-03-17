@@ -11,6 +11,7 @@ import morgan from "morgan";
 import chalk from "chalk";
 import mongoSanitize from "express-mongo-sanitize";
 import { xss } from "express-xss-sanitizer";
+import { clerkMiddleware } from "@clerk/express";
 
 // Application routes and global utilities
 import ENV from "./config/env.js";
@@ -42,6 +43,9 @@ app.use(helmet());
 
 // Compress response bodies for performance
 app.use(compression());
+
+// Clerk Authentication Middleware
+app.use(clerkMiddleware());
 
 // Logging (Development only)
 if (ENV.NODE_ENV === "development") {
