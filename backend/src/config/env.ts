@@ -8,7 +8,7 @@ dotenv.config();
 export const ENV = {
   // Application Info
   NODE_ENV: process.env.NODE_ENV || "development",
-  PORT: Number(process.env.PORT) || 8000,
+  PORT: process.env.PORT ? Number(process.env.PORT) : 3000,
   API_PREFIX: process.env.API_PREFIX || "/api",
   BASE_URL: process.env.BASE_URL || "http://localhost:8000",
 
