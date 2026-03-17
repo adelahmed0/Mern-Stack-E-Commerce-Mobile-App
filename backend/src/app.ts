@@ -134,15 +134,12 @@ app.use(`${api}`, routes);
 
 // 8) 404 HANDLER / FRONTEND FALLBACK
 // Serve index.html for any frontend routes that aren't API calls
-app.get("/:all*", (req: Request, res: Response, next: NextFunction) => {
-  if (req.originalUrl.startsWith(api)) {
-    return next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
-  }
+app.get(/^(?!\/api).*/, (req: Request, res: Response, next: NextFunction) => {
   res.sendFile(path.join(adminDistPath, "index.html"));
 });
 
 // Fallback for any route not matched by the routers above (API only)
-app.all(`${api}/:all*`, (req: Request, res: Response, next: NextFunction) => {
+app.all(new RegExp(`^${api}/.*`), (req: Request, res: Response, next: NextFunction) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
 });
 
