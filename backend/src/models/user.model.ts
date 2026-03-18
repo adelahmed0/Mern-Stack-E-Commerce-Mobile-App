@@ -1,13 +1,35 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema, Types,Document } from "mongoose";
 import {toJSONPlugin} from "../helpers/mongoosePlugins.js"
 
+export interface IAddress {
+    label:string,
+    fullName:string,
+    streetAddress:string,
+    city:string,
+    state:string,
+    zipCode:string,
+    phoneNumber:string,
+    isDefault:boolean
+}
+export interface IUser extends Document {
+    email:string,
+    name:string,
+    imageUrl:string,
+    clerkId:string,
+    addresses:IAddress[],
+    wishlist:Types.ObjectId[],
+}
 
-const addressSchema = new Schema({
+const addressSchema = new Schema<IAddress>({
     label:{
         type:String,
         required:true
     },
-    address:{
+    fullName:{
+        type:String,
+        required:true
+    },
+    streetAddress:{
         type:String,
         required:true
     },
@@ -19,16 +41,20 @@ const addressSchema = new Schema({
         type:String,
         required:true
     },
-    zip:{
+    zipCode:{
         type:String,
         required:true
     },
-    country:{
+    phoneNumber:{
         type:String,
         required:true
+    },
+    isDefault:{
+        type:Boolean,
+        default:false
     }
 })
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
     email: {
         type: String,
         required: true,
@@ -47,7 +73,7 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    addresses:[],
+    addresses:[addressSchema],
     wishlist:[
         {
             type:Types.ObjectId,
@@ -59,6 +85,6 @@ const userSchema = new Schema({
 
 userSchema.plugin(toJSONPlugin)
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model<IUser>("User",userSchema);
 
 export default User
