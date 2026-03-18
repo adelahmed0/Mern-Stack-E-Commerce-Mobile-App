@@ -12,6 +12,8 @@ import chalk from "chalk";
 import mongoSanitize from "express-mongo-sanitize";
 import { xss } from "express-xss-sanitizer";
 import { clerkMiddleware } from "@clerk/express";
+import { serve } from "inngest/express";
+import { inngest, functions } from "./config/inngest.js";
 
 // Application routes and global utilities
 import ENV from "./config/env.js";
@@ -131,9 +133,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
   message: "Too many requests, please try again after 15 minutes.",
 });
-app.use(`${api}`, limiter);
-
 // 7) MOUNT ROUTES
+app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use(`${api}`, limiter);
 app.use(`${api}`, routes);
 
 // 8) 404 HANDLER / FRONTEND FALLBACK
