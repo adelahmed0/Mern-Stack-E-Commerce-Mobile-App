@@ -42,6 +42,18 @@ export const ENV = {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
   },
+
+  // Cloudinary Configuration
+  CLOUDINARY: {
+    CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    API_KEY: process.env.CLOUDINARY_API_KEY,
+    API_SECRET: process.env.CLOUDINARY_API_SECRET,
+  },
+
+  // Ingest Configuration
+  INNGEST: {
+    INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
+  },
 };
 
 export default ENV;
