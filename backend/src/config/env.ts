@@ -53,6 +53,7 @@ export const ENV = {
   // Ingest Configuration
   INNGEST: {
     INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
+    INNGEST_DEV: process.env.INNGEST_DEV === "1",
   },
 };
 

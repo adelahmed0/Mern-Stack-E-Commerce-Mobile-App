@@ -3,6 +3,10 @@ import connectDB from "./db.js";
 import User from "../models/user.model.js";
 import ENV from "./env.js";
 
+if (!ENV.INNGEST.INNGEST_SIGNING_KEY && !process.env.INNGEST_DEV) {
+  console.warn("⚠️ INNGEST_SIGNING_KEY is missing and INNGEST_DEV is not set.");
+}
+
 export const inngest = new Inngest({
   id: "Mern-Stack-E-Commerce-Mobile-App",
   signingKey: ENV.INNGEST.INNGEST_SIGNING_KEY,
