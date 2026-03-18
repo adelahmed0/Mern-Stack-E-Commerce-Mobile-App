@@ -51,6 +51,7 @@ app.use(
           "https://*.clerk.accounts.dev",
           "https://clerk.com",
           "https://js.stripe.com",
+          "blob:",
         ],
         "connect-src": [
           "'self'",
@@ -69,6 +70,7 @@ app.use(
           "https://*.clerk.accounts.dev",
           "https://js.stripe.com",
         ],
+        "worker-src": ["'self'", "blob:"],
         "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         "font-src": ["'self'", "https://fonts.gstatic.com"],
       },
