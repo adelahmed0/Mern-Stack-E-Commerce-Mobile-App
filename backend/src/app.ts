@@ -85,6 +85,9 @@ if (ENV.NODE_ENV === "development") {
   );
 }
 
+// Inngest Middleware (Must be before JSON body parsers for signature verification)
+app.use("/api/inngest", serve({ client: inngest, functions }));
+
 // 4) BODY PARSERS & SANITIZATION
 // Parse query strings and JSON/URL-encoded data
 app.set("query parser", "extended");
@@ -136,7 +139,6 @@ const limiter = rateLimit({
   message: "Too many requests, please try again after 15 minutes.",
 });
 // 7) MOUNT ROUTES
-app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use(`${api}`, limiter);
 app.use(`${api}`, routes);
 
