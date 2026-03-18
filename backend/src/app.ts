@@ -40,8 +40,41 @@ app.use(
   }),
 );
 
-// Set security HTTP headers
-app.use(helmet());
+// Set security HTTP headers with custom CSP to allow Clerk, Stripe, and Cloudinary
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"],
+        "script-src": [
+          "'self'",
+          "https://*.clerk.accounts.dev",
+          "https://clerk.com",
+          "https://js.stripe.com",
+        ],
+        "connect-src": [
+          "'self'",
+          "https://*.clerk.accounts.dev",
+          "https://api.stripe.com",
+        ],
+        "img-src": [
+          "'self'",
+          "data:",
+          "https://*.clerk.accounts.dev",
+          "https://res.cloudinary.com",
+          "https://img.clerk.com",
+        ],
+        "frame-src": [
+          "'self'",
+          "https://*.clerk.accounts.dev",
+          "https://js.stripe.com",
+        ],
+        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+      },
+    },
+  }),
+);
 
 // Compress response bodies for performance
 app.use(compression());
