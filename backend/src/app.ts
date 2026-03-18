@@ -85,15 +85,22 @@ if (ENV.NODE_ENV === "development") {
   );
 }
 
-// Inngest Middleware (Must be before JSON body parsers for signature verification)
-app.use("/api/inngest", serve({ client: inngest, functions }));
-
 // 4) BODY PARSERS & SANITIZATION
 // Parse query strings and JSON/URL-encoded data
 app.set("query parser", "extended");
 // Standard body size limit
-app.use(express.json({ limit: "20kb" }));
+app.use(
+  express.json({
+    limit: "20kb",
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
+
+// Inngest Middleware (Safe to be after JSON parser with req.rawBody)
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Data Sanitization against NoSQL query injection
 app.use((req: Request, res: Response, next: NextFunction) => {
