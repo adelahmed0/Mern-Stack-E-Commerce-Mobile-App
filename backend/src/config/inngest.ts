@@ -1,8 +1,12 @@
 import { Inngest } from "inngest";
 import connectDB from "./db.js";
 import User from "../models/user.model.js";
+import ENV from "./env.js";
 
-export const inngest = new Inngest({ id: "Mern-Stack-E-Commerce-Mobile-App" });
+export const inngest = new Inngest({
+  id: "Mern-Stack-E-Commerce-Mobile-App",
+  signingKey: ENV.INNGEST.INNGEST_SIGNING_KEY,
+});
 
 const syncUser = inngest.createFunction(
   { id: "sync-user", triggers: [{ event: "clerk/user.created" }] },

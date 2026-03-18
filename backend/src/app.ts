@@ -122,7 +122,9 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 // Serve admin frontend static files (Production only recommended)
 const adminDistPath = path.join(__dirname, "../..", "admin", "dist");
-app.use(express.static(adminDistPath));
+if (ENV.NODE_ENV === "production") {
+  app.use(express.static(adminDistPath));
+}
 
 // 6) RATE LIMITING
 // Global Rate Limiting: Prevent brute-force and DDoS
@@ -140,9 +142,11 @@ app.use(`${api}`, routes);
 
 // 8) 404 HANDLER / FRONTEND FALLBACK
 // Serve index.html for any frontend routes that aren't API calls
-app.get(/^(?!\/api).*/, (req: Request, res: Response, next: NextFunction) => {
-  res.sendFile(path.join(adminDistPath, "index.html"));
-});
+if (ENV.NODE_ENV === "production") {
+  app.get(/^(?!\/api).*/, (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(adminDistPath, "index.html"));
+  });
+}
 
 // Fallback for any route not matched by the routers above (API only)
 app.all(new RegExp(`^${api}/.*`), (req: Request, res: Response, next: NextFunction) => {
